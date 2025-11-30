@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ data.name }} | Portfolio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-logo">{{ data.name.split()[0] }}<span>.</span></a>
+            <div class="nav-links">
+                <a href="#about">Hakkımda</a>
+                <a href="#skills">Yetenekler</a>
+                <a href="#projects">Projeler</a>
+                <a href="/blog">Blog</a>
+                <a href="#contact" class="nav-cta">İletişim</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-badge">👋 Hoş geldiniz</div>
+            <h1 class="hero-title">
+                Ben <span class="gradient-text">{{ data.name }}</span>
+            </h1>
+            <p class="hero-subtitle">{{ data.title }}</p>
+            <p class="hero-bio">{{ data.bio }}</p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary">Projelerimi Gör</a>
+                <a href="#contact" class="btn btn-secondary">İletişime Geç</a>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <span>Aşağı Kaydır</span>
+            <div class="scroll-indicator"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Hakkımda</span>
+                <h2>Tutkulu bir <span class="accent">geliştirici</span></h2>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>{{ data.bio }}</p>
+                    <p>Yeni teknolojileri öğrenmeye ve karmaşık problemlere yaratıcı çözümler üretmeye bayılıyorum. Her projede kullanıcı deneyimini ön planda tutarak, estetik ve fonksiyonel tasarımlar oluşturmayı hedefliyorum.</p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">3+</span>
+                        <span class="stat-label">Yıl Deneyim</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">20+</span>
+                        <span class="stat-label">Proje</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">15+</span>
+                        <span class="stat-label">Mutlu Müşteri</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Yetenekler</span>
+                <h2>Teknik <span class="accent">Uzmanlıklar</span></h2>
+            </div>
+            <div class="skills-grid">
+                {% for skill in data.skills %}
+                <div class="skill-card">
+                    <div class="skill-info">
+                        <span class="skill-name">{{ skill.name }}</span>
+                        <span class="skill-percent">{{ skill.level }}%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="--progress: {{ skill.level }}%"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Projeler</span>
+                <h2>Son <span class="accent">Çalışmalarım</span></h2>
+            </div>
+            <div class="projects-grid">
+                {% for project in data.projects %}
+                <article class="project-card">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <a href="{{ project.link }}" class="project-link">Projeyi Gör →</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3>{{ project.title }}</h3>
+                        <p>{{ project.description }}</p>
+                        <div class="project-tech">
+                            {% for tech in project.tech %}
+                            <span class="tech-tag">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">İletişim</span>
+                <h2>Birlikte <span class="accent">Çalışalım</span></h2>
+            </div>
+            <div class="contact-content">
+                <p class="contact-text">Yeni projeler ve işbirlikleri için her zaman açığım. Benimle iletişime geçmekten çekinmeyin!</p>
+                <div class="contact-links">
+                    <a href="mailto:{{ data.email }}" class="contact-item">
+                        <span class="contact-icon">✉️</span>
+                        <span>{{ data.email }}</span>
+                    </a>
+                    <a href="{{ data.github }}" target="_blank" class="contact-item">
+                        <span class="contact-icon">💻</span>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="{{ data.linkedin }}" target="_blank" class="contact-item">
+                        <span class="contact-icon">💼</span>
+                        <span>LinkedIn</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 {{ data.name }}. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Animate skill bars on scroll
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.skill-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
+
+
