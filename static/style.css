@@ -359,6 +359,162 @@ a {
 }
 
 /* ============================================
+   Floating Clouds Animation
+   ============================================ */
+.clouds {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+    filter: blur(40px);
+}
+
+.cloud::before,
+.cloud::after {
+    content: '';
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+}
+
+.cloud-1 {
+    width: 300px;
+    height: 120px;
+    top: 15%;
+    left: -150px;
+    animation: floatCloud 35s linear infinite;
+}
+
+.cloud-1::before {
+    width: 150px;
+    height: 150px;
+    top: -60px;
+    left: 50px;
+}
+
+.cloud-1::after {
+    width: 180px;
+    height: 100px;
+    top: -30px;
+    left: 120px;
+}
+
+.cloud-2 {
+    width: 250px;
+    height: 100px;
+    top: 35%;
+    left: -200px;
+    animation: floatCloud 45s linear infinite;
+    animation-delay: -10s;
+    opacity: 0.6;
+}
+
+.cloud-2::before {
+    width: 120px;
+    height: 120px;
+    top: -50px;
+    left: 40px;
+}
+
+.cloud-2::after {
+    width: 140px;
+    height: 80px;
+    top: -20px;
+    left: 100px;
+}
+
+.cloud-3 {
+    width: 200px;
+    height: 80px;
+    top: 60%;
+    left: -150px;
+    animation: floatCloud 40s linear infinite;
+    animation-delay: -20s;
+    opacity: 0.4;
+}
+
+.cloud-3::before {
+    width: 100px;
+    height: 100px;
+    top: -40px;
+    left: 30px;
+}
+
+.cloud-3::after {
+    width: 120px;
+    height: 70px;
+    top: -15px;
+    left: 80px;
+}
+
+.cloud-4 {
+    width: 280px;
+    height: 110px;
+    top: 25%;
+    left: -180px;
+    animation: floatCloud 50s linear infinite;
+    animation-delay: -25s;
+    opacity: 0.5;
+}
+
+.cloud-4::before {
+    width: 140px;
+    height: 140px;
+    top: -55px;
+    left: 45px;
+}
+
+.cloud-4::after {
+    width: 160px;
+    height: 90px;
+    top: -25px;
+    left: 110px;
+}
+
+.cloud-5 {
+    width: 220px;
+    height: 90px;
+    top: 75%;
+    left: -160px;
+    animation: floatCloud 38s linear infinite;
+    animation-delay: -15s;
+    opacity: 0.3;
+}
+
+.cloud-5::before {
+    width: 110px;
+    height: 110px;
+    top: -45px;
+    left: 35px;
+}
+
+.cloud-5::after {
+    width: 130px;
+    height: 75px;
+    top: -18px;
+    left: 90px;
+}
+
+@keyframes floatCloud {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(100vw + 400px));
+    }
+}
+
+/* ============================================
    Section Styles
    ============================================ */
 section {
