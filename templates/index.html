@@ -218,34 +218,35 @@
             });
         });
 
-        // Ping-pong video loop (ileri-geri)
+        // Seamless video loop with longer fade
         const video = document.getElementById('heroVideo');
         if (video) {
-            let isReversing = false;
-            let reverseInterval = null;
+            const fadeDuration = 3; // 3 saniye fade süresi
             
-            video.addEventListener('ended', function() {
-                // Video bitince geriye oynat
-                isReversing = true;
-                const speed = 0.03; // Geri oynatma hızı
-                
-                reverseInterval = setInterval(() => {
-                    if (video.currentTime <= 0) {
-                        // Başa döndü, tekrar ileri oynat
-                        clearInterval(reverseInterval);
-                        isReversing = false;
-                        video.play();
-                    } else {
-                        video.currentTime -= speed;
-                    }
-                }, 16); // ~60fps
+            video.addEventListener('timeupdate', function() {
+                // Fade out - video bitmeden 3 saniye önce başla
+                if (this.duration - this.currentTime < fadeDuration) {
+                    this.style.opacity = (this.duration - this.currentTime) / fadeDuration;
+                } else {
+                    this.style.opacity = 1;
+                }
             });
             
-            // Video oynarken reverse'i durdur
-            video.addEventListener('play', function() {
-                if (reverseInterval && !isReversing) {
-                    clearInterval(reverseInterval);
-                }
+            video.addEventListener('ended', function() {
+                this.style.opacity = 0;
+                this.currentTime = 0;
+                this.play();
+                
+                // Fade in - yavaşça görünür ol
+                let opacity = 0;
+                const fadeIn = setInterval(() => {
+                    opacity += 0.02; // Daha yavaş fade in
+                    this.style.opacity = opacity;
+                    if (opacity >= 1) {
+                        this.style.opacity = 1;
+                        clearInterval(fadeIn);
+                    }
+                }, 50);
             });
         }
     </script>
