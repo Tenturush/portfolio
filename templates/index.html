@@ -218,15 +218,15 @@
             });
         });
 
-        // Seamless video loop with longer fade
+        // Seamless video loop with extra long fade
         const video = document.getElementById('heroVideo');
         if (video) {
-            const fadeDuration = 3; // 3 saniye fade süresi
+            const fadeOutDuration = 5; // 5 saniye fade out
             
             video.addEventListener('timeupdate', function() {
-                // Fade out - video bitmeden 3 saniye önce başla
-                if (this.duration - this.currentTime < fadeDuration) {
-                    this.style.opacity = (this.duration - this.currentTime) / fadeDuration;
+                // Fade out - video bitmeden 5 saniye önce başla
+                if (this.duration - this.currentTime < fadeOutDuration) {
+                    this.style.opacity = (this.duration - this.currentTime) / fadeOutDuration;
                 } else {
                     this.style.opacity = 1;
                 }
@@ -235,18 +235,22 @@
             video.addEventListener('ended', function() {
                 this.style.opacity = 0;
                 this.currentTime = 0;
-                this.play();
                 
-                // Fade in - yavaşça görünür ol
-                let opacity = 0;
-                const fadeIn = setInterval(() => {
-                    opacity += 0.02; // Daha yavaş fade in
-                    this.style.opacity = opacity;
-                    if (opacity >= 1) {
-                        this.style.opacity = 1;
-                        clearInterval(fadeIn);
-                    }
-                }, 50);
+                // 1 saniye tamamen karanlık bekle
+                setTimeout(() => {
+                    this.play();
+                    
+                    // Çok yavaş fade in - 4 saniyede görünür ol
+                    let opacity = 0;
+                    const fadeIn = setInterval(() => {
+                        opacity += 0.0125; // Çok yavaş (4 saniye)
+                        this.style.opacity = opacity;
+                        if (opacity >= 1) {
+                            this.style.opacity = 1;
+                            clearInterval(fadeIn);
+                        }
+                    }, 50);
+                }, 1000); // 1 saniye karanlık
             });
         }
     </script>
