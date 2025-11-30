@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim | {{ data.company_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="header scrolled">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="/" class="logo">
+                    <span class="logo-text">{{ data.company_name }}</span>
+                </a>
+                
+                <ul class="nav-menu">
+                    <li><a href="/" class="nav-link">Anasayfa</a></li>
+                    <li><a href="/hakkimizda" class="nav-link">Kurumsal</a></li>
+                    <li><a href="/hizmetler" class="nav-link">Hizmetlerimiz</a></li>
+                    <li><a href="/yayinlar" class="nav-link">Yayınlar</a></li>
+                    <li><a href="/iletisim" class="nav-link nav-cta active">İletişim</a></li>
+                </ul>
+                
+                <button class="nav-toggle" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <span class="section-tag">İletişim</span>
+            <h1 class="page-title">Bizimle <span class="text-accent">İletişime Geçin</span></h1>
+            <p class="page-desc">Sorularınız için bize ulaşabilirsiniz</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>İletişim Bilgileri</h2>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <h4>Adres</h4>
+                            <p>{{ data.address }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-details">
+                            <h4>Telefon</h4>
+                            <p>{{ data.phone }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-details">
+                            <h4>E-posta</h4>
+                            <p>{{ data.email }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-hours">
+                        <h4>Çalışma Saatleri</h4>
+                        <p>Pazartesi - Cuma: 09:00 - 18:00</p>
+                        <p>Cumartesi - Pazar: Kapalı</p>
+                    </div>
+                </div>
+                
+                <div class="contact-form-wrapper">
+                    <h2>Mesaj Gönderin</h2>
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Ad Soyad</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">E-posta</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Telefon</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Konu</label>
+                            <select id="subject" name="subject">
+                                <option value="">Seçiniz</option>
+                                <option value="danismanlik">Danışmanlık</option>
+                                <option value="teklif">Teklif Talebi</option>
+                                <option value="bilgi">Bilgi Alma</option>
+                                <option value="diger">Diğer</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="message">Mesajınız</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-lg">Gönder</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>Tüm hakları saklıdır. 2025 © {{ data.company_name }}</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+
+        // Form submission
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Mesajınız gönderildi! En kısa sürede size dönüş yapacağız.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
+

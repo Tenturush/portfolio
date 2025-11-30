@@ -3,123 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ data.name }} | Portfolio</title>
+    <title>{{ data.company_name }} | {{ data.slogan }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/" class="nav-logo">{{ data.name.split()[0] }}<span>.</span></a>
-            <div class="nav-links">
-                <a href="#about">Hakkımda</a>
-                <a href="#skills">Yetenekler</a>
-                <a href="#projects">Projeler</a>
-                <a href="/blog">Blog</a>
-                <a href="#contact" class="nav-cta">İletişim</a>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="/" class="logo">
+                    <span class="logo-text">{{ data.company_name }}</span>
+                </a>
+                
+                <ul class="nav-menu">
+                    <li><a href="/" class="nav-link active">Anasayfa</a></li>
+                    <li><a href="/hakkimizda" class="nav-link">Kurumsal</a></li>
+                    <li class="nav-dropdown">
+                        <a href="/hizmetler" class="nav-link">Hizmetlerimiz <span class="dropdown-arrow">▼</span></a>
+                        <div class="dropdown-menu">
+                            {% for service in data.services %}
+                            <a href="/hizmetler#{{ service.title|lower|replace(' ', '-') }}">{{ service.title }}</a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    <li><a href="/yayinlar" class="nav-link">Yayınlar</a></li>
+                    <li><a href="/iletisim" class="nav-link nav-cta">İletişim</a></li>
+                </ul>
+                
+                <button class="nav-toggle" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-bg"></div>
         <div class="hero-content">
-            <div class="hero-badge">👋 Hoş geldiniz</div>
             <h1 class="hero-title">
-                Ben <span class="gradient-text">{{ data.name }}</span>
+                Bilgi, Birikim, <span class="text-accent">Strateji.</span>
             </h1>
-            <p class="hero-subtitle">{{ data.title }}</p>
-            <p class="hero-bio">{{ data.bio }}</p>
+            <p class="hero-description">{{ data.description }}</p>
             <div class="hero-buttons">
-                <a href="#projects" class="btn btn-primary">Projelerimi Gör</a>
-                <a href="#contact" class="btn btn-secondary">İletişime Geç</a>
+                <a href="/hakkimizda" class="btn btn-primary">Kurumsal</a>
+                <a href="/hizmetler" class="btn btn-outline">Hizmetlerimiz</a>
             </div>
         </div>
         <div class="hero-scroll">
             <span>Aşağı Kaydır</span>
-            <div class="scroll-indicator"></div>
+            <div class="scroll-line"></div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
+    <!-- Services Preview -->
+    <section class="services-preview">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag">Hakkımda</span>
-                <h2>Tutkulu bir <span class="accent">geliştirici</span></h2>
+                <span class="section-tag">Hizmetlerimiz</span>
+                <h2 class="section-title">Öne Çıkan <span class="text-accent">Hizmetlerimiz</span></h2>
+                <a href="/hizmetler" class="section-link">Tüm Hizmetler →</a>
             </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>{{ data.bio }}</p>
-                    <p>Yeni teknolojileri öğrenmeye ve karmaşık problemlere yaratıcı çözümler üretmeye bayılıyorum. Her projede kullanıcı deneyimini ön planda tutarak, estetik ve fonksiyonel tasarımlar oluşturmayı hedefliyorum.</p>
-                </div>
-                <div class="about-stats">
-                    <div class="stat-item">
-                        <span class="stat-number">3+</span>
-                        <span class="stat-label">Yıl Deneyim</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">20+</span>
-                        <span class="stat-label">Proje</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number">15+</span>
-                        <span class="stat-label">Mutlu Müşteri</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Yetenekler</span>
-                <h2>Teknik <span class="accent">Uzmanlıklar</span></h2>
-            </div>
-            <div class="skills-grid">
-                {% for skill in data.skills %}
-                <div class="skill-card">
-                    <div class="skill-info">
-                        <span class="skill-name">{{ skill.name }}</span>
-                        <span class="skill-percent">{{ skill.level }}%</span>
-                    </div>
-                    <div class="skill-bar">
-                        <div class="skill-progress" style="--progress: {{ skill.level }}%"></div>
-                    </div>
+            
+            <div class="services-grid">
+                {% for service in data.services[:4] %}
+                <div class="service-card">
+                    <div class="service-icon">{{ service.icon }}</div>
+                    <h3 class="service-title">{{ service.title }}</h3>
+                    <p class="service-desc">{{ service.description }}</p>
+                    <a href="/hizmetler" class="service-link">Detaylar →</a>
                 </div>
                 {% endfor %}
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="projects">
+    <!-- About Preview -->
+    <section class="about-preview">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <span class="section-tag">Hakkımızda</span>
+                    <h2 class="section-title">{{ data.about.title }}</h2>
+                    <p class="about-text">{{ data.about.text }}</p>
+                    <a href="/hakkimizda" class="btn btn-primary">Hakkımızda</a>
+                </div>
+                <div class="about-stats">
+                    {% for stat in data.about.stats %}
+                    <div class="stat-card">
+                        <span class="stat-number">{{ stat.number }}</span>
+                        <span class="stat-label">{{ stat.label }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publications Preview -->
+    <section class="publications-preview">
         <div class="container">
             <div class="section-header">
-                <span class="section-tag">Projeler</span>
-                <h2>Son <span class="accent">Çalışmalarım</span></h2>
+                <span class="section-tag">Yayınlar</span>
+                <h2 class="section-title">Yayınlarımız</h2>
+                <a href="/yayinlar" class="section-link">Tüm Yayınlar →</a>
             </div>
-            <div class="projects-grid">
-                {% for project in data.projects %}
-                <article class="project-card">
-                    <div class="project-image">
-                        <div class="project-overlay">
-                            <a href="{{ project.link }}" class="project-link">Projeyi Gör →</a>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3>{{ project.title }}</h3>
-                        <p>{{ project.description }}</p>
-                        <div class="project-tech">
-                            {% for tech in project.tech %}
-                            <span class="tech-tag">{{ tech }}</span>
-                            {% endfor %}
-                        </div>
+            
+            <div class="publications-grid">
+                {% for pub in data.publications %}
+                <article class="publication-card">
+                    <div class="publication-image"></div>
+                    <div class="publication-content">
+                        <span class="publication-category">{{ pub.category }}</span>
+                        <h3 class="publication-title">{{ pub.title }}</h3>
+                        <span class="publication-date">{{ pub.date }}</span>
                     </div>
                 </article>
                 {% endfor %}
@@ -127,29 +128,13 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
+    <!-- CTA Section -->
+    <section class="cta-section">
         <div class="container">
-            <div class="section-header">
-                <span class="section-tag">İletişim</span>
-                <h2>Birlikte <span class="accent">Çalışalım</span></h2>
-            </div>
-            <div class="contact-content">
-                <p class="contact-text">Yeni projeler ve işbirlikleri için her zaman açığım. Benimle iletişime geçmekten çekinmeyin!</p>
-                <div class="contact-links">
-                    <a href="mailto:{{ data.email }}" class="contact-item">
-                        <span class="contact-icon">✉️</span>
-                        <span>{{ data.email }}</span>
-                    </a>
-                    <a href="{{ data.github }}" target="_blank" class="contact-item">
-                        <span class="contact-icon">💻</span>
-                        <span>GitHub</span>
-                    </a>
-                    <a href="{{ data.linkedin }}" target="_blank" class="contact-item">
-                        <span class="contact-icon">💼</span>
-                        <span>LinkedIn</span>
-                    </a>
-                </div>
+            <div class="cta-content">
+                <h2 class="cta-title">Danışmanlık Çözümleri için <span class="text-accent">Bize Ulaşın.</span></h2>
+                <p class="cta-text">{{ data.description }}</p>
+                <a href="/iletisim" class="btn btn-primary btn-lg">İletişim</a>
             </div>
         </div>
     </section>
@@ -157,12 +142,67 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>© 2025 {{ data.name }}. Tüm hakları saklıdır.</p>
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <span class="logo-text">{{ data.company_name }}</span>
+                    <p class="footer-desc">{{ data.slogan }}</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Sayfalar</h4>
+                    <ul>
+                        <li><a href="/">Anasayfa</a></li>
+                        <li><a href="/hakkimizda">Kurumsal</a></li>
+                        <li><a href="/hizmetler">Hizmetlerimiz</a></li>
+                        <li><a href="/yayinlar">Yayınlar</a></li>
+                        <li><a href="/iletisim">İletişim</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Hizmetlerimiz</h4>
+                    <ul>
+                        {% for service in data.services[:4] %}
+                        <li><a href="/hizmetler">{{ service.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4>İletişim</h4>
+                    <p>{{ data.address }}</p>
+                    <p>{{ data.phone }}</p>
+                    <p>{{ data.email }}</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>Tüm hakları saklıdır. 2025 © {{ data.company_name }}</p>
+            </div>
         </div>
     </footer>
 
     <script>
-        // Smooth scroll for navigation links
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -171,35 +211,6 @@
                 });
             });
         });
-
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Animate skill bars on scroll
-        const observerOptions = {
-            threshold: 0.5
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.skill-card').forEach(card => {
-            observer.observe(card);
-        });
     </script>
 </body>
 </html>
-
-

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakkımızda | {{ data.company_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="header scrolled">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="/" class="logo">
+                    <span class="logo-text">{{ data.company_name }}</span>
+                </a>
+                
+                <ul class="nav-menu">
+                    <li><a href="/" class="nav-link">Anasayfa</a></li>
+                    <li><a href="/hakkimizda" class="nav-link active">Kurumsal</a></li>
+                    <li><a href="/hizmetler" class="nav-link">Hizmetlerimiz</a></li>
+                    <li><a href="/yayinlar" class="nav-link">Yayınlar</a></li>
+                    <li><a href="/iletisim" class="nav-link nav-cta">İletişim</a></li>
+                </ul>
+                
+                <button class="nav-toggle" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <span class="section-tag">Kurumsal</span>
+            <h1 class="page-title">{{ data.about.title }}</h1>
+            <p class="page-desc">{{ data.about.text }}</p>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="about-full">
+        <div class="container">
+            <div class="about-full-grid">
+                <div class="about-full-content">
+                    <h2>Misyonumuz</h2>
+                    <p>Müşterilerimize en yüksek kalitede danışmanlık hizmeti sunarak, iş hedeflerine ulaşmalarında güvenilir bir partner olmak.</p>
+                    
+                    <h2>Vizyonumuz</h2>
+                    <p>Türkiye'nin lider danışmanlık firmalarından biri olarak, sektörde yenilikçi ve sürdürülebilir çözümler üreten öncü bir kuruluş olmak.</p>
+                    
+                    <h2>Değerlerimiz</h2>
+                    <ul class="values-list">
+                        <li><strong>Güvenilirlik:</strong> Her zaman dürüst ve şeffaf iletişim</li>
+                        <li><strong>Profesyonellik:</strong> En yüksek standartlarda hizmet</li>
+                        <li><strong>Yenilikçilik:</strong> Sürekli gelişim ve güncel çözümler</li>
+                        <li><strong>Müşteri Odaklılık:</strong> İhtiyaçlara özel yaklaşımlar</li>
+                    </ul>
+                </div>
+                
+                <div class="about-full-stats">
+                    {% for stat in data.about.stats %}
+                    <div class="stat-card-lg">
+                        <span class="stat-number-lg">{{ stat.number }}</span>
+                        <span class="stat-label-lg">{{ stat.label }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Birlikte <span class="text-accent">Çalışalım</span></h2>
+                <p class="cta-text">Deneyimimiz ve uzmanlığımızla yanınızdayız.</p>
+                <a href="/iletisim" class="btn btn-primary btn-lg">İletişime Geçin</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>Tüm hakları saklıdır. 2025 © {{ data.company_name }}</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
+

@@ -3,75 +3,101 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 # ========== BURAYA KENDİ BİLGİLERİNİZİ GİRİN ==========
-PORTFOLIO_DATA = {
-    "name": "Adınız Soyadınız",
-    "title": "Web Developer & Designer",
-    "bio": "Merhaba! Ben tutkulu bir yazılım geliştiriciyim. Modern ve kullanıcı dostu web uygulamaları geliştirmeyi seviyorum.",
-    "email": "email@example.com",
-    "github": "https://github.com/kullaniciadi",
-    "linkedin": "https://linkedin.com/in/kullaniciadi",
+SITE_DATA = {
+    "company_name": "Bilge Güven",
+    "slogan": "Danışmanlıkta Güvenilir Yol Arkadaşınız",
+    "description": "Her projede net yol haritası, titiz uygulama ve açık iletişimle danışmanlık süreçlerinize aynı disiplin ve kaliteyle eşlik ediyoruz.",
+    "phone": "+90 212 XXX XX XX",
+    "email": "info@bilgeguven.info",
+    "address": "İstanbul, Türkiye",
     
-    "skills": [
-        {"name": "Python", "level": 90},
-        {"name": "JavaScript", "level": 85},
-        {"name": "HTML/CSS", "level": 95},
-        {"name": "React", "level": 75},
-        {"name": "Flask", "level": 80},
+    "services": [
+        {
+            "title": "Kurumsal Danışmanlık",
+            "description": "Şirketinizin büyüme hedeflerine ulaşması için stratejik danışmanlık hizmetleri sunuyoruz.",
+            "icon": "📊"
+        },
+        {
+            "title": "Finansal Danışmanlık",
+            "description": "Mali yapınızı güçlendirmek ve sürdürülebilir büyüme için finansal çözümler üretiyoruz.",
+            "icon": "💰"
+        },
+        {
+            "title": "İş Geliştirme",
+            "description": "Yeni pazarlara açılma ve iş fırsatlarını değerlendirme konusunda yanınızdayız.",
+            "icon": "🚀"
+        },
+        {
+            "title": "Proje Yönetimi",
+            "description": "Projelerinizi zamanında ve bütçe dahilinde tamamlamak için profesyonel yönetim desteği.",
+            "icon": "📋"
+        },
+        {
+            "title": "Dijital Dönüşüm",
+            "description": "İşletmenizi geleceğe taşıyacak dijital çözümler ve teknoloji danışmanlığı.",
+            "icon": "💻"
+        },
+        {
+            "title": "Eğitim ve Gelişim",
+            "description": "Ekiplerinizin yetkinliklerini artıracak özelleştirilmiş eğitim programları.",
+            "icon": "🎓"
+        }
     ],
     
-    "projects": [
-        {
-            "title": "E-Ticaret Platformu",
-            "description": "Modern bir online alışveriş deneyimi sunan full-stack uygulama.",
-            "tech": ["Python", "Flask", "PostgreSQL"],
-            "link": "#"
-        },
-        {
-            "title": "Task Manager App",
-            "description": "Görev yönetimi için minimalist ve kullanışlı bir web uygulaması.",
-            "tech": ["React", "Node.js", "MongoDB"],
-            "link": "#"
-        },
-        {
-            "title": "Weather Dashboard",
-            "description": "Gerçek zamanlı hava durumu takibi yapan interaktif dashboard.",
-            "tech": ["JavaScript", "API", "Chart.js"],
-            "link": "#"
-        },
-    ],
+    "about": {
+        "title": "Köklü Tecrübe, Güncel Bakış Açısı",
+        "text": "Bilge Güven olarak, yıllara yayılan danışmanlık tecrübemizi güncel yaklaşımlar ve teknolojilerle birleştiriyoruz. Amacımız yalnızca görüş sunmak değil, uygulanabilir ve ölçülebilir bir yol haritası üretmektir.",
+        "stats": [
+            {"number": "10+", "label": "Yıllık Tecrübe"},
+            {"number": "200+", "label": "Tamamlanan Proje"},
+            {"number": "50+", "label": "Mutlu Müşteri"}
+        ]
+    },
     
-    "blog_posts": [
+    "publications": [
         {
-            "title": "Python ile Web Geliştirmeye Başlamak",
-            "date": "28 Kasım 2025",
-            "summary": "Flask framework'ü kullanarak ilk web uygulamanızı nasıl oluşturacağınızı öğrenin.",
-            "slug": "python-web-gelistirme"
+            "title": "Kurumsal Başarının Anahtarları",
+            "category": "Kurumsal",
+            "date": "25 Kasım 2025",
+            "slug": "kurumsal-basarinin-anahtarlari"
         },
         {
-            "title": "Modern CSS Teknikleri",
-            "date": "20 Kasım 2025", 
-            "summary": "Flexbox, Grid ve CSS değişkenleri ile responsive tasarımlar oluşturun.",
-            "slug": "modern-css-teknikleri"
+            "title": "Dijital Dönüşümde Dikkat Edilmesi Gerekenler",
+            "category": "Teknoloji",
+            "date": "20 Kasım 2025",
+            "slug": "dijital-donusum"
         },
+        {
+            "title": "Etkili Proje Yönetimi İpuçları",
+            "category": "Yönetim",
+            "date": "15 Kasım 2025",
+            "slug": "proje-yonetimi"
+        }
     ]
 }
 # ======================================================
 
 @app.route('/')
 def home():
-    return render_template('index.html', data=PORTFOLIO_DATA)
+    return render_template('index.html', data=SITE_DATA)
 
-@app.route('/blog')
-def blog():
-    return render_template('blog.html', data=PORTFOLIO_DATA)
+@app.route('/hizmetler')
+def services():
+    return render_template('services.html', data=SITE_DATA)
 
-@app.route('/blog/<slug>')
-def blog_post(slug):
-    post = next((p for p in PORTFOLIO_DATA['blog_posts'] if p['slug'] == slug), None)
-    return render_template('post.html', data=PORTFOLIO_DATA, post=post)
+@app.route('/hakkimizda')
+def about():
+    return render_template('about.html', data=SITE_DATA)
+
+@app.route('/yayinlar')
+def publications():
+    return render_template('publications.html', data=SITE_DATA)
+
+@app.route('/iletisim')
+def contact():
+    return render_template('contact.html', data=SITE_DATA)
 
 if __name__ == '__main__':
     import os
     port = int(os.environ.get('PORT', 5000))
     app.run(debug=False, host='0.0.0.0', port=port)
-

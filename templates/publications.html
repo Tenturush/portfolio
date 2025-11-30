@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yayınlar | {{ data.company_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="header scrolled">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="/" class="logo">
+                    <span class="logo-text">{{ data.company_name }}</span>
+                </a>
+                
+                <ul class="nav-menu">
+                    <li><a href="/" class="nav-link">Anasayfa</a></li>
+                    <li><a href="/hakkimizda" class="nav-link">Kurumsal</a></li>
+                    <li><a href="/hizmetler" class="nav-link">Hizmetlerimiz</a></li>
+                    <li><a href="/yayinlar" class="nav-link active">Yayınlar</a></li>
+                    <li><a href="/iletisim" class="nav-link nav-cta">İletişim</a></li>
+                </ul>
+                
+                <button class="nav-toggle" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <span class="section-tag">Yayınlar</span>
+            <h1 class="page-title">Güncel <span class="text-accent">Yayınlarımız</span></h1>
+            <p class="page-desc">Sektörel gelişmeler ve uzman görüşlerimiz</p>
+        </div>
+    </section>
+
+    <!-- Publications Grid -->
+    <section class="publications-full">
+        <div class="container">
+            <div class="publications-grid-full">
+                {% for pub in data.publications %}
+                <article class="publication-card-full">
+                    <div class="publication-image-full"></div>
+                    <div class="publication-content-full">
+                        <span class="publication-category">{{ pub.category }}</span>
+                        <h3 class="publication-title-full">{{ pub.title }}</h3>
+                        <p class="publication-excerpt">Detaylı bilgi ve analizler için yayınımızı inceleyebilirsiniz.</p>
+                        <div class="publication-meta">
+                            <span class="publication-date">{{ pub.date }}</span>
+                            <a href="#" class="publication-link">Devamını Oku →</a>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>Tüm hakları saklıdır. 2025 © {{ data.company_name }}</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
+
