@@ -45,7 +45,7 @@
     <section class="hero">
         <!-- Video Background -->
         <div class="hero-video-container">
-            <video class="hero-video" autoplay muted loop playsinline>
+            <video class="hero-video" id="heroVideo" autoplay muted playsinline>
                 <source src="https://res.cloudinary.com/dhiqypkt4/video/upload/v1764538507/AdobeStock_320074075_1_uytis8.mp4" type="video/mp4">
             </video>
             <div class="hero-video-overlay"></div>
@@ -217,6 +217,30 @@
                 });
             });
         });
+
+        // Seamless video loop with fade
+        const video = document.getElementById('heroVideo');
+        if (video) {
+            video.addEventListener('timeupdate', function() {
+                // 1.5 saniye kala fade out başlat
+                if (this.duration - this.currentTime < 1.5) {
+                    this.style.opacity = (this.duration - this.currentTime) / 1.5;
+                }
+            });
+            
+            video.addEventListener('ended', function() {
+                this.style.opacity = 0;
+                this.currentTime = 0;
+                this.play();
+                // Fade in
+                let opacity = 0;
+                const fadeIn = setInterval(() => {
+                    opacity += 0.05;
+                    this.style.opacity = opacity;
+                    if (opacity >= 1) clearInterval(fadeIn);
+                }, 50);
+            });
+        }
     </script>
 </body>
 </html>
