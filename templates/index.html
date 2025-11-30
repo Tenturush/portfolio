@@ -218,27 +218,34 @@
             });
         });
 
-        // Seamless video loop with fade
+        // Ping-pong video loop (ileri-geri)
         const video = document.getElementById('heroVideo');
         if (video) {
-            video.addEventListener('timeupdate', function() {
-                // 1.5 saniye kala fade out başlat
-                if (this.duration - this.currentTime < 1.5) {
-                    this.style.opacity = (this.duration - this.currentTime) / 1.5;
-                }
-            });
+            let isReversing = false;
+            let reverseInterval = null;
             
             video.addEventListener('ended', function() {
-                this.style.opacity = 0;
-                this.currentTime = 0;
-                this.play();
-                // Fade in
-                let opacity = 0;
-                const fadeIn = setInterval(() => {
-                    opacity += 0.05;
-                    this.style.opacity = opacity;
-                    if (opacity >= 1) clearInterval(fadeIn);
-                }, 50);
+                // Video bitince geriye oynat
+                isReversing = true;
+                const speed = 0.03; // Geri oynatma hızı
+                
+                reverseInterval = setInterval(() => {
+                    if (video.currentTime <= 0) {
+                        // Başa döndü, tekrar ileri oynat
+                        clearInterval(reverseInterval);
+                        isReversing = false;
+                        video.play();
+                    } else {
+                        video.currentTime -= speed;
+                    }
+                }, 16); // ~60fps
+            });
+            
+            // Video oynarken reverse'i durdur
+            video.addEventListener('play', function() {
+                if (reverseInterval && !isReversing) {
+                    clearInterval(reverseInterval);
+                }
             });
         }
     </script>
